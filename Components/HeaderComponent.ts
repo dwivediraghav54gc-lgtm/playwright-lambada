@@ -9,6 +9,8 @@ export class HeaderComponent extends BasePage{
     readonly logIn: Locator;
     readonly searchBox :Locator;
     readonly searchButton : Locator;
+    readonly shopByCategory:Locator;
+    
 
 
 
@@ -21,6 +23,7 @@ export class HeaderComponent extends BasePage{
         this.logIn = page.getByText('Login',{exact:true});
         this.searchButton = page.getByRole('button',{name:"SEARCH"})
         this.searchBox = page.getByPlaceholder('Search For Products').first();
+        this.shopByCategory = page.getByRole('button',{name:'Shop by Category'})
     }
 
     async verifyUserLoggedIn(){
@@ -40,4 +43,12 @@ export class HeaderComponent extends BasePage{
         await this.fill(this.searchBox, productName)
         await this.click(this.searchButton);
    }
+
+//    async wishListPage(){
+//     await this.
+//    }
+
+    async clikShopByCategory(){
+            await this.click(this.shopByCategory);
+    }
 }

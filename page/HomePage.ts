@@ -1,18 +1,19 @@
 import { Page,Locator } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { HeaderComponent } from "../Components/HeaderComponent";
 
-
-export class HomePage extends HeaderComponent{
-
-  
+export class HomePage{
+  page: Page
+  searchInput:Locator;
+  searchButton :Locator;
 
   constructor(page:Page){
-    super(page)
-   
+   this.page = page
+   this.searchButton= page.getByRole('button',{name:'Search'}).nth(0);
+   this.searchInput =page.getByRole('textbox',{name:'Saerch For Products'}); 
+
   }
 
-   async clickHeroBanner(){
-   
-   }
+  async searchProduct(productName:string){
+    await this.searchInput.fill(productName);
+    await  this.searchButton.click();
+  }
 }

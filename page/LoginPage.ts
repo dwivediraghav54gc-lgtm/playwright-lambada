@@ -1,31 +1,24 @@
-import { Page,Locator } from "@playwright/test";
-import { BasePage } from "./BasePage";
-import { HeaderComponent } from "../Components/HeaderComponent";
+import { Page, Locator } from "@playwright/test";
 
-export class LoginPage extends BasePage{
-
-    readonly emailInput:Locator;
+export class LoginPage {
+    // 1. Declare properties
+    readonly page: Page;
+    readonly emailInput: Locator;
     readonly passwordInput: Locator;
-    readonly loginButton:Locator;
+    readonly loginButton: Locator;
 
-    constructor(page:Page){
-        super(page)
-        this.emailInput = page.getByRole('textbox',{name:'E-mail Address'});
-        this.passwordInput = page.getByRole('textbox',{name:'Password'});
-        this.loginButton = page.getByRole('button',{name:'Login'});
-        
-        
+    // 2. The Constructor: Initializes our properties when the object is born
+    constructor(page: Page) {
+        this.page = page; // Saving the browser page instance to use inside this class
+        this.emailInput = page.getByPlaceholder('E-Mail Address');
+        this.passwordInput = page.getByPlaceholder('Password');
+        this.loginButton = page.locator("//input[@value='Login']"); 
     }
 
-    public async login(email:string ,pass:string):Promise<void>{
-        
-        await this.fill(this.emailInput,email);
-        await this.fill(this.passwordInput,pass);
-        await this.click(this.loginButton);
-
+    // 3. Method: The action our page can perform using native Playwright
+    async login(email: string, pass: string): Promise<void> {
+        await this.emailInput.fill(email);
+        await this.passwordInput.fill(pass);
+        await this.loginButton.click();
     }
-    
-
-
-
-} 
+}
